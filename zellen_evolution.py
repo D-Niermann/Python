@@ -119,6 +119,13 @@ while n<300:
 		plt.show()
 		break
 
+if n!=300:
+	for grid in master:
+		plt.cla()
+		plt.imshow(grid,interpolation="nearest")
+		plt.grid()
+		plt.pause(0.01)
 
+	print "Used starting condition:"
+	print start
 	plt.close()
-	#new line1
