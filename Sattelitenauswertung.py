@@ -44,5 +44,3 @@ function(60,255,70,255,"k","Clouds")
 plt.legend()
 plt.tight_layout()
 plt.show()
-
-#bla bla
