@@ -41,6 +41,9 @@ function(20,30,90,170,"b","Low vegetation")
 function(30,60,30,70,"y","Dense city")
 function(25,45,40,70,"m","Sparse city")
 function(60,255,70,255,"k","Clouds")
-plt.legend()
-plt.tight_layout()
+# plt.legend()
+
 plt.show()
+asd
+asd
+asd
