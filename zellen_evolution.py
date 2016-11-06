@@ -129,3 +129,5 @@ if n!=300:
 	print "Used starting condition:"
 	print start
 	plt.close()
+#new line 2
+#new line 3
