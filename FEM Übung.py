@@ -31,39 +31,36 @@ def form1dlin(x,elm_id,node_id):
 			print "error"
 	return Ni
 
-def form1dquad(x,elm_id,node_id):
+def form1dquad(x,elm_id,node_id,grad):
 	x1 = xi[ElmCon[elm_id][0]]
 	x2 = xi[ElmCon[elm_id][1]]
 	x3 = xi[ElmCon[elm_id][2]]
-	
+	h=0.01
 
 	if x>xi[ElmCon[elm_id][2]] or x<xi[ElmCon[elm_id][0]]:
 		Ni=0
 		return Ni
-	if node_id==0:
-		Ni=1/((x1-x2)*(x1-x3))*(x-x2)*(x-x3)
-	if node_id==1:
-		Ni=1/((x2-x1)*(x2-x3))*(x-x1)*(x-x3)
-	if node_id==2:
-		Ni=1/((x3-x1)*(x3-x2))*(x-x1)*(x-x2)
-	return Ni
 
-def diff_form1dquad(x,elm_id,node_id):
-	x1 = xi[ElmCon[elm_id][0]]
-	x2 = xi[ElmCon[elm_id][1]]
-	x3 = xi[ElmCon[elm_id][2]]
-	h  = 0.01
-	if x>xi[ElmCon[elm_id][2]] or x<xi[ElmCon[elm_id][0]]:
-		Ni=0
+	if grad==0:	
+		if node_id==0:
+			Ni=1/((x1-x2)*(x1-x3))*(x-x2)*(x-x3)
+		if node_id==1:
+			Ni=1/((x2-x1)*(x2-x3))*(x-x1)*(x-x3)
+		if node_id==2:
+			Ni=1/((x3-x1)*(x3-x2))*(x-x1)*(x-x2)
+		return Ni
+	elif grad==1:
+		if node_id==0:
+			Ni=(1/((x1-x2)*(x1-x3))*(x+h-x2)*(x+h-x3)-1/((x1-x2)*(x1-x3))*(x-x2)*(x-x3))/h
+		if node_id==1:
+			Ni=(1/((x2-x1)*(x2-x3))*(x+h-x1)*(x+h-x3)-1/((x2-x1)*(x2-x3))*(x-x1)*(x-x3))/h
+		if node_id==2:
+			Ni=(1/((x3-x1)*(x3-x2))*(x+h-x1)*(x+h-x2)-1/((x3-x1)*(x3-x2))*(x-x1)*(x-x2))/h
 		return Ni
 
-	if node_id==0:
-		Ni=(1/((x1-x2)*(x1-x3))*(x+h-x2)*(x+h-x3)-1/((x1-x2)*(x1-x3))*(x-x2)*(x-x3))/h
-	if node_id==1:
-		Ni=(1/((x2-x1)*(x2-x3))*(x+h-x1)*(x+h-x3)-1/((x2-x1)*(x2-x3))*(x-x1)*(x-x3))/h
-	if node_id==2:
-		Ni=(1/((x3-x1)*(x3-x2))*(x+h-x1)*(x+h-x2)-1/((x3-x1)*(x3-x2))*(x-x1)*(x-x2))/h
-	return Ni
+
+
+
 
 def form_sum(x,elm_id):
 	return form1dquad(x,elm_id,0)+form1dquad(x,elm_id,1)+form1dquad(x,elm_id,2)
