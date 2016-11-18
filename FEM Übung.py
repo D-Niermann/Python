@@ -39,10 +39,11 @@ def form1dlin(x,elm_id,node_id,grad):
 			Ni=1/(x2-x1)
 	return Ni
 
-def form1dquad(x,elm_id,node_id,grad):
+def form1dquad(x,elm_id,node_id,grad=0):
 	#berechne wie viele elemente für quad:
 	a=(len(xi)-1)/2.
 	if a!=int(a): 
+		print "Error 1"
 		return None
 
 	x1 = xi[ElmCon[elm_id][0]]
@@ -77,7 +78,7 @@ def form_sumquad(x,elm_id):
 ###########################################################################################
 
 
-xi = [0.,1.,2.,5.,1,6.] #koordinaten der nodes, muss für quad 2*N+1 sein
+xi = [0.,1.,2.] #koordinaten der nodes, muss für quad 2*N+1 sein
 # xi=np.linspace(0,10,21)
 
 
@@ -89,9 +90,9 @@ print ElmCon
 
 
 #plotte alle formfunktionenen n(x)
-x_max=5
+x_max=2
 for el_num in range(1):
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,2,0) for x in np.arange(0,x_max,0.01)],"r.-")
+	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,2) for x in np.arange(0,x_max,0.01)],"r.-")
 	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,1,0) for x in np.arange(0,x_max,0.01)],"g.-")
 	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,0,0) for x in np.arange(0,x_max,0.01)],"b.-")
 	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,2,1) for x in np.arange(0,x_max,0.01)],"r--")
