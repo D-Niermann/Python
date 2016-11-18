@@ -15,7 +15,7 @@ seaborn.set_style("ticks",
 
 
 
-def form1dlin(x,elm_id,node_id,grad):
+def form1dlin(x,elm_id,node_id,grad=0):
 	"""Erzeugt formfunktion: linierae anpassung zwischen 2 Nodes welche nebeneinander 
 	sind. Überall anders =0. Node ID =0 heisst das die linke node des elements 
 	genommen wird und =1 heisst rechte node"""
@@ -93,8 +93,8 @@ print ElmCon
 x_max=2
 for el_num in range(1):
 	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,2) for x in np.arange(0,x_max,0.01)],"r.-")
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,1,0) for x in np.arange(0,x_max,0.01)],"g.-")
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,0,0) for x in np.arange(0,x_max,0.01)],"b.-")
+	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,1) for x in np.arange(0,x_max,0.01)],"g.-")
+	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,0) for x in np.arange(0,x_max,0.01)],"b.-")
 	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,2,1) for x in np.arange(0,x_max,0.01)],"r--")
 	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,1,1) for x in np.arange(0,x_max,0.01)],"g--")
 	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,0,1) for x in np.arange(0,x_max,0.01)],"b--")
