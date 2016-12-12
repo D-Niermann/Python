@@ -90,14 +90,16 @@ print ElmCon
 
 
 #plotte alle formfunktionenen n(x)
-x_max=2
+x_max=xi[-1]
 for el_num in range(1):
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,2) for x in np.arange(0,x_max,0.01)],"r.-")
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,1) for x in np.arange(0,x_max,0.01)],"g.-")
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,0) for x in np.arange(0,x_max,0.01)],"b.-")
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,2,1) for x in np.arange(0,x_max,0.01)],"r--")
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,1,1) for x in np.arange(0,x_max,0.01)],"g--")
-	plt.plot(np.arange(0,x_max,0.01),[form1dquad(x,el_num,0,1) for x in np.arange(0,x_max,0.01)],"b--")
+	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,2) for x in np.arange(0,x_max,0.05)],"r.-")
+	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,1) for x in np.arange(0,x_max,0.05)],"g.-")
+	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,0) for x in np.arange(0,x_max,0.05)],"b.-")
+	
+	# plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,2,1) for x in np.arange(0,x_max,0.05)],"r--")
+	# plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,1,1) for x in np.arange(0,x_max,0.05)],"g--")
+	# plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,0,1) for x in np.arange(0,x_max,0.05)],"b--")
+	
 	# plt.plot(np.arange(0,x_max,0.1),[form_sum(x,i)     for x in np.arange(0,x_max,0.1)],".-")
 plt.show()
 
