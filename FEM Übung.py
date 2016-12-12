@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import numpy as np
 import scipy as sc
 import matplotlib.pyplot as plt
@@ -32,12 +33,13 @@ def form1dlin(x,elm_id,node_id,grad=0):
 			Ni=(x2-x)/(x2-x1)
 		elif node_id==1:
 			Ni=(x-x1)/(x2-x1)
+		return Ni
 	elif grad==1:
 		if node_id==0:
 			Ni=-1/(x2-x1)
 		elif node_id==1:
 			Ni=1/(x2-x1)
-	return Ni
+		return Ni
 
 def form1dquad(x,elm_id,node_id,grad=0):
 	#berechne wie viele elemente für quad:
@@ -75,30 +77,58 @@ def form1dquad(x,elm_id,node_id,grad=0):
 def form_sumquad(x,elm_id):
 	return form1dquad(x,elm_id,0)+form1dquad(x,elm_id,1)+form1dquad(x,elm_id,2)
 
+def form_prod(x,elm_id,Node1,Node2,grad=0):
+	return form1dlin(x,elm_id,Node1,grad)*form1dlin(x,elm_id,Node2,grad)
 ###########################################################################################
 
 
-xi = [0.,1.,2.] #koordinaten der nodes, muss für quad 2*N+1 sein
+################ koordinaten der nodes, muss für quad 2*N+1 sein
+xi = [2.,4.,6.,8.]
 # xi=np.linspace(0,10,21)
+A=2		#Wärmeleitfähigkeit
+k=1		#Wärmeleitung
+Q=100.	#inhomogenität
 
-
-
+################# Netz erstellen
 ElmCon = []	#ereugt liste mit node id's. xi[ElmCon] gibt dann koordinaten
-for  i in range(0,len(xi)-2,2):
-	ElmCon.append([i,i+1,i+2])
-print ElmCon
+for  i in range(0,len(xi)-1):
+	ElmCon.append([i,i+1])
+print "ElmCon:",ElmCon
 
+
+
+################ K Matrix erstellen
+K=np.zeros([len(xi),len(xi)])
+
+#gehe submatrizen durch ...jede matrix ist ein element zugehörig
+for element in range(len(ElmCon)):	#gehe elemente durch
+	for Node1 in range(len(ElmCon[i])):	#whäle rechte oder linke node
+		for Node2 in range(len(ElmCon[i])):	#wähle andere node
+			a=xi[ElmCon[i][0]]	#grenze für integral
+			b=xi[ElmCon[i][1]]	#grenze für int
+			K[ElmCon[i][Node1],ElmCon[i][Node2]]+=integrate.quad(form_prod,a,b,args=(i,Node1,Node2,1))[0]
+
+K=A*k*K
+print "K-Matrix:\n",K
+
+############### f Vektor erstellen
+f=np.zeros(len(xi))
+for element in range(len(ElmCon)):
+	for Node in range(len(ElmCon)):
+		a=xi[ElmCon[i][0]]	#grenze für integral
+		b=xi[ElmCon[i][1]]	#grenze für int
+		f[ElmCon[element][Node]]+=Q*integrate.quad(form1dlin,a,b,args=(element,Node))[0]
 
 #plotte alle formfunktionenen n(x)
 x_max=xi[-1]
-for el_num in range(1):
-	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,2) for x in np.arange(0,x_max,0.05)],"r.-")
-	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,1) for x in np.arange(0,x_max,0.05)],"g.-")
-	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,0) for x in np.arange(0,x_max,0.05)],"b.-")
+for el_num in range(3):
+	# plt.plot(np.arange(0,x_max,0.05),[form1dlin(x,el_num,2) for x in np.arange(0,x_max,0.05)],"r.-")
+	plt.plot(np.arange(0,x_max,0.05),[form1dlin(x,el_num,1) for x in np.arange(0,x_max,0.05)],"g.-")
+	plt.plot(np.arange(0,x_max,0.05),[form1dlin(x,el_num,0) for x in np.arange(0,x_max,0.05)],"b.-")
 	
-	# plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,2,1) for x in np.arange(0,x_max,0.05)],"r--")
-	# plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,1,1) for x in np.arange(0,x_max,0.05)],"g--")
-	# plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,0,1) for x in np.arange(0,x_max,0.05)],"b--")
+	# plt.plot(np.arange(0,x_max,0.05),[form1dlin(x,el_num,2,1) for x in np.arange(0,x_max,0.05)],"r--")
+	# plt.plot(np.arange(0,x_max,0.05),[form1dlin(x,el_num,1,1) for x in np.arange(0,x_max,0.05)],"g--")
+	# plt.plot(np.arange(0,x_max,0.05),[form1dlin(x,el_num,0,1) for x in np.arange(0,x_max,0.05)],"b--")
 	
 	# plt.plot(np.arange(0,x_max,0.1),[form_sum(x,i)     for x in np.arange(0,x_max,0.1)],".-")
 plt.show()
