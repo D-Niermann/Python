@@ -105,7 +105,7 @@ def form_prod_quad(x,elm_id,Node1,Node2,grad=0):
 
 ################ koordinaten der nodes, muss für quad 2*N+1 sein
 # xi   = [2.,3.,4.,5.,6.,7.,8.]
-xi     = np.linspace(2,8,2*3+1)
+xi     = np.linspace(2,8,2+1)
 A      = 10		#Wärmeleitfähigkeit
 k      = 5		#Wärmeleitung
 Q      = 100.	#Inhomogenität
@@ -204,12 +204,19 @@ x_max=xi[-1]
 # 	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,2,1) for x in np.arange(0,x_max,0.05)],"r--")
 # 	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,1,1) for x in np.arange(0,x_max,0.05)],"g--")
 # 	plt.plot(np.arange(0,x_max,0.05),[form1dquad(x,el_num,0,1) for x in np.arange(0,x_max,0.05)],"b--")
-	
+
+
+#interpoliere T...a=T
+a=[]
+for x in np.linspace(2,8,100):	
+	a.append(T[0]*form1dquad(x,0,0)+T[1]*form1dquad(x,0,1)+T[2]*form1dquad(x,0,2))
+
+
 
 # plotte T
-plt.plot(xi,T)
-plt.plot(np.linspace(2,8,100),[ana(x) for x in np.linspace(2,8,100)])
+plt.plot(xi,T)	#berechnete werte
+plt.plot(np.linspace(2,8,100),a)	#interpolierte werte
+plt.plot(np.linspace(2,8,100),[ana(x) for x in np.linspace(2,8,100)]) #analösung
 plt.xlabel("x")
 plt.ylabel("Temperatur "+r"$T$")
 plt.show()
-
