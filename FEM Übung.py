@@ -3,7 +3,7 @@ import numpy as np
 import scipy as sc
 import matplotlib.pyplot as plt
 from scipy import integrate
-import seaborn
+import seaborn,time
 seaborn.set(font_scale=1)
 np.set_printoptions(suppress=True)
 seaborn.set_style("ticks",
@@ -105,13 +105,13 @@ def form_prod_quad(x,elm_id,Node1,Node2,grad=0):
 
 ################ koordinaten der nodes, muss für quad 2*N+1 sein
 # xi   = [2.,3.,4.,5.,6.,7.,8.]
-xi     = np.linspace(2,8,2+1)
+xi     = np.linspace(2,8,20+1)
 A      = 10		#Wärmeleitfähigkeit
 k      = 5		#Wärmeleitung
 Q      = 100.	#Inhomogenität
 q      = -15.	#Wärmefluss 
 ga     = 10		#Direchlet Temp
-alpha  = 10		#Wärmeübergangskoeff
+alpha  = 1		#Wärmeübergangskoeff
 T_inf  = 10		#Umgebungstemp
 option = "quad"	#"lin" oder "quad" formfunc auswählen
 ##################################################################
@@ -127,6 +127,8 @@ elif option=="quad":
 	formprod=form_prod_quad
 	formfunc=form1dquad
 
+# Zeit Messung
+t1=time.clock()
 
 ################# Netz erstellen
 ElmCon=ElmCon(option)
@@ -191,7 +193,7 @@ f = q_c+f
 
 T=np.linalg.solve(K,f)
 print "Temp: " , np.round(T,2)
-
+print "time used: ",time.clock()-t1
 
 #plotte alle formfunktionenen n(x)
 x_max=xi[-1]
@@ -207,16 +209,16 @@ x_max=xi[-1]
 
 
 #interpoliere T...a=T
-a=[]
-for x in np.linspace(2,8,100):	
-	a.append(T[0]*form1dquad(x,0,0)+T[1]*form1dquad(x,0,1)+T[2]*form1dquad(x,0,2))
+# a=[]
+# for x in np.linspace(2,8,100):	
+# 	a.append(T[0]*form1dquad(x,0,0)+T[1]*form1dquad(x,0,1)+T[2]*form1dquad(x,0,2))
 
 
 
 # plotte T
 plt.plot(xi,T)	#berechnete werte
-plt.plot(np.linspace(2,8,100),a)	#interpolierte werte
-plt.plot(np.linspace(2,8,100),[ana(x) for x in np.linspace(2,8,100)]) #analösung
+# plt.plot(np.linspace(2,8,100),a)	#interpolierte werte
+# plt.plot(np.linspace(2,8,100),[ana(x) for x in np.linspace(2,8,100)]) #analösung
 plt.xlabel("x")
 plt.ylabel("Temperatur "+r"$T$")
 plt.show()
