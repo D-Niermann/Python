@@ -14,7 +14,7 @@ Simple tool for plotting a function f(x) over x given 3 parameters which can be 
 Programm that searches for duplicate sentence beginnings and marks them. For controlling your own written texts for redundancy
 
 - ### UISearchProgramm
-Search Tool that works like Spotlight for Mac, exept its slower and way more stupid.
+Search Tool that works like Spotlight for Mac, exept its slower and way more stupid but still works very well and was actually usable for me back when I needed it.
 Teached myself how to use GUI applications and multiple threads.
 
 ## Non GUI Applications
